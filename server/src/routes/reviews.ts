@@ -37,4 +37,30 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { reviewText, sentiment, ai_confidence } = req.body;
+
+    if (!reviewText || !sentiment || !ai_confidence) {
+        return res.status(400).json({ error: 'Review text, sentiment, and AI confidence are required' });
+    }
+
+    try {
+        const result = await pool.query(
+            `UPDATE reviews
+            SET review_text = $1, sentiment = $2, ai_confidence = $3
+            WHERE id = $4
+            RETURNING *`,
+            [reviewText, sentiment, ai_confidence, id]
+        );
+        if (result.rows.length === 0 ) {
+            return res.status(404).json({ error: 'Review not found' });
+        }
+        return res.json(result.rows[0]); // Return the updated review
+    } catch (err) {
+        console.error('Error updating review:', err);
+        return res.status(500).json({ error: 'Server error' });
+    }
+});
+
 export default router;

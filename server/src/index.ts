@@ -5,8 +5,9 @@ import reviewsRouter from './routes/reviews';
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+app.use(express.json());
 app.use('/api/products', productsRouter);
-app.use('api/reviews', reviewsRouter);
+app.use('/api/reviews', reviewsRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');

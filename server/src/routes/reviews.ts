@@ -1,9 +1,16 @@
 import { Router } from 'express';
+import pool from '../db';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-    res.send('Reviews route works!');
+router.get('/', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM reviews');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
 });
 
 export default router;

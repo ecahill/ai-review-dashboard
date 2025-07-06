@@ -1,6 +1,6 @@
 import express from 'express';
 import productsRouter from './routes/products';
-import reviewsRouter from './routs/reviews';
+import reviewsRouter from './routes/reviews';
 
 const app = express();
 const PORT = process.env.PORT || 4000;

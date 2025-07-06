@@ -1,7 +1,12 @@
 import express from 'express';
+import productsRouter from './routes/products';
+import reviewsRouter from './routs/reviews';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+app.use('/api/products', productsRouter);
+app.use('api/reviews', reviewsRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');

@@ -1,0 +1,75 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+type Product = {
+  id: number;
+  name: string;
+  description?: string;
+  price: number;
+};
+
+type Review = {
+  id: number;
+  product_id: number;
+  text: string;
+  sentiment: 'positive' | 'negative' | 'neutral';
+};
+
+const ProductDetailPage = () => {
+    const { id } = useParams();
+    const [product, setProduct] = useState<Product | null>(null);
+    const [reviews, setReviews] = useState<Review[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const productRes = await fetch(`/api/products/${id}`);
+            const productData: Product = await productRes.json();
+            setProduct(productData);
+
+            const reviews = await fetch(`/api/reviews?productId=${id}`);
+            const reviewData: Review[] = await reviews.json();
+            setReviews(reviewData);
+        };
+
+        fetchData();
+    }, [id]);
+
+    if (!product) return <div>Loading...</div>;
+
+    return (
+        <div>
+            <h2>{product.name}</h2>
+            <p>{product.description}</p>
+
+            <h3>Reviews</h3>
+            {reviews.length === 0 && <p>No reviews yet.</p>}
+            {reviews.map((review) => (
+                <div key={review.id}>
+                    <p>{review.text}</p>
+                    <span style={{ color: getSentimentColor(review.sentiment) }}>
+                    ● {review.sentiment}
+                    </span>
+                    </div>
+            ))}
+        {/* Placeholder for chart */}
+        </div>
+    );
+};
+
+const getSentimentColor = (sentiment: string) => {
+    switch(sentiment) {
+        case 'positive':
+            return 'green';
+        case 'negative':
+            return 'red';
+        case 'neutral':
+            return 'gray';
+        default:
+            return 'black';
+    }
+};
+
+export default ProductDetailPage;
+
+
+

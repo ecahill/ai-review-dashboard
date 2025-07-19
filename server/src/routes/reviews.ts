@@ -1,3 +1,4 @@
+import { analyzeSentiment } from '../utils/analyzeSentiment'
 import { Router } from 'express';
 import pool from '../db';
 
@@ -21,9 +22,7 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        // TODO: Call AI sentiment service
-        const sentiment = 'neutral'; // Placeholder for AI sentiment analysis
-        const ai_confidence = 0.75; // Placeholder for AI confidence score
+        const { sentiment, ai_confidence } = await analyzeSentiment(review_text);
 
         const result = await pool.query(
             `INSERT INTO reviews (product_id, review_text, sentiment, ai_confidence)
@@ -46,9 +45,7 @@ router.put('/:id', async (req, res) => {
     }
 
     try {
-        // TODO: Call AI sentiment service
-        const sentiment = 'neutral'; // Placeholder for AI sentiment analysis
-        const ai_confidence = 0.0; // Placeholder for AI confidence score
+        const { sentiment, ai_confidence } = await analyzeSentiment(review_text);
 
         const result = await pool.query(
             `UPDATE reviews

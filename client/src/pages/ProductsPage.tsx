@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 
 type Product = {
@@ -10,6 +11,7 @@ type Product = {
 
 const ProductsPage: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch('/api/products')
@@ -22,7 +24,11 @@ const ProductsPage: React.FC = () => {
         <div>
             <h1>All Products</h1>
             {products.map((product) => (
-                <ProductCard key={product.id} product={product} onClick={() => alert(`Clicked ${product.name}`)} />
+                <ProductCard 
+                    key={product.id}
+                    product={product}
+                    onClick={() => navigate(`/products/${product.id}`)}
+                />
             ))}
         </div>
     );

@@ -1,4 +1,4 @@
-import { analyzeSentiment } from '../utils/analyzeSentiment'
+import { analyzeSentiment } from '../utils/analyzeSentiment';
 import { Router } from 'express';
 import pool from '../db';
 

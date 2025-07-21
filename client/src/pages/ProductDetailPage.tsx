@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import SentimentChart from '../components/SentimentChart';
 
 type Product = {
   id: number;
@@ -51,7 +52,16 @@ const ProductDetailPage = () => {
                     </span>
                     </div>
             ))}
-        {/* Placeholder for chart */}
+<h3>Sentiment Breakdown</h3>
+<div style={{ width: '100%', maxWidth: '500px', margin: '0 auto' }}>
+  <SentimentChart
+    data={[
+      { label: 'positive', value: 5 },
+      { label: 'neutral', value: 2 },
+      { label: 'negative', value: 3 },
+    ]}
+  />
+</div>
         </div>
     );
 };

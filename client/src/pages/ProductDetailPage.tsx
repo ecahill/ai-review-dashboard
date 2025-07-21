@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import SentimentChart from '../components/SentimentChart';
+import '../App.css';
 
 type Product = {
   id: number;
@@ -38,7 +39,8 @@ const ProductDetailPage = () => {
     if (!product) return <div>Loading...</div>;
 
     return (
-        <div>
+        <div className="product-detail-container">
+            <button onClick={() => window.history.back()}>← Back</button>
             <h2>{product.name}</h2>
             <p>{product.description}</p>
 

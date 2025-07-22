@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
         );
         return res.status(201).json(result.rows[0]);
     } catch (err) {
-        console.error('ERror inserting review:', err);
+        console.error('Error inserting review:', err);
         return res.status(500).json({ error: 'Server error' });
     }
 });

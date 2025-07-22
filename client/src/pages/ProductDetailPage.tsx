@@ -15,6 +15,7 @@ type Review = {
   product_id: number;
   text: string;
   sentiment: 'positive' | 'negative' | 'neutral';
+  ai_confidence: number;
 };
 
 const ProductDetailPage = () => {
@@ -51,6 +52,9 @@ const ProductDetailPage = () => {
                     <p>{review.text}</p>
                     <span style={{ color: getSentimentColor(review.sentiment) }}>
                     ● {review.sentiment}
+                    </span>
+                    <span style={{ color: '#555' }}>
+                        Confidence: {(review.ai_confidence * 100).toFixed(1)}%
                     </span>
                     </div>
             ))}
